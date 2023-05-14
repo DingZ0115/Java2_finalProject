@@ -29,9 +29,9 @@ CS209
     ├─common
     ├─config
     ├─controller
-	├─entity
-	├─mapper
-	└─service
+    ├─entity
+    ├─mapper
+    └─service
 ```
 
 In SpringBoot, the project uses MyBatis to interact with the database, which facilitates decoupling and simplifies development, adopts declarative transaction processing, reduces the difficulty of using Java EE API, and performs lightweight development with outstanding effects. The basic function and structure of the four-layer framework are shown in the following figure:
