@@ -41,7 +41,8 @@
         <i class="el-icon-circle-check"></i>
         The most active users discussed in java thread
       </div>
-      <div id="chart5" style="height:500px;width:500px;margin:auto"></div>
+      <span style="color: white">0.2* ( # post questions) +0.5*( # answer questions) +0.3* (# comment)</span>
+      <div id="chart5" style="height:400px;width:500px;margin:auto"></div>
     </div>
   </div>
 </template>
@@ -236,7 +237,10 @@ export default {
           {
             name: 'distribution_line',
             type: 'line',
-            data: this.answerValue
+            data: this.answerValue,
+            itemStyle: {
+              color: '#f0be18'
+            }
           }],
         textStyle: {
           color: 'white'
@@ -313,7 +317,10 @@ export default {
           {
             name: 'distribution_line',
             type: 'line',
-            data: this.commentValue
+            data: this.commentValue,
+            itemStyle: {
+              color: '#79f018'
+            }
           }],
         textStyle: {
           color: 'white'
@@ -390,7 +397,10 @@ export default {
           {
             name: 'distribution_line',
             type: 'line',
-            data: this.communicationValue
+            data: this.communicationValue,
+            itemStyle: {
+              color: '#f0be18'
+            }
           },
         ],
         textStyle: {
@@ -420,12 +430,24 @@ export default {
           axisTick: {
             show: false,
           },
+          axisLabel: {
+            show: false,
+          },
         },
         series: [{
           name: '排行榜',
-          barWidth: 100,
+          barWidth: 120,
           type: 'bar',
-          data: [2, 3, 1],
+          data: [1.5, 2, 1],
+          label: {
+            show: true,
+            position: 'top',
+            formatter: '{b}',
+            textStyle: {
+              color: '#fff',
+              fontSize: 16,
+            },
+          },
           itemStyle: {
             color: function (params) {   // 设置柱形图的颜色
               if (params.dataIndex === 1) {
@@ -452,10 +474,4 @@ export default {
 </script>
 
 <style scoped>
-.showCard {
-  border: 1px solid #dccfcf;
-  box-shadow: 0 0 25px #909399;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.75);
-}
 </style>

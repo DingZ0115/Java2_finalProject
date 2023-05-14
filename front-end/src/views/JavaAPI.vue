@@ -1,13 +1,13 @@
 <template>
   <div class="javaAPI">
     <div class="show">
-      <div style="flex-basis: 65%;">
+      <div style="flex-basis: 70%;">
         <div id="wordCloudChart" style="height: 600px;"></div>
       </div>
-      <div style="flex-basis: 35%;">
-        <el-card style="text-align: left;width:70%" class="wrapperCard">
+      <div style="flex-basis: 30%;">
+        <el-card style="text-align: left;width:80%" class="wrapperCard">
           <el-scrollbar height="560px">
-            <div v-for="(item, index) in topTags" :key="index">
+            <div v-for="(item, index) in information" :key="index">
               <el-card class="showCard">
                 <div class="textX">
                   <i class="el-icon-location other"></i>
@@ -29,7 +29,7 @@ export default {
   name: "JavaAPI",
   data() {
     return {
-      information: []
+      information: [],
     }
   },
   methods: {
@@ -37,7 +37,7 @@ export default {
       const wordChart = echarts.init(document.getElementById("wordCloudChart"));
       const wordOpt = {
         title: {
-          text: 'Tags frequently appear together with the java tag',
+          text: 'The 30 most frequently discussed apis on Stack Overflow',
           textStyle: {
             fontStyle: 'oblique',
             fontSize: 20,
@@ -47,9 +47,9 @@ export default {
         },
         visualMap: {
           type: 'continuous',
-          min: 16,
-          max: 80,
-          color: ['#ffd500', '#32c9f6'],
+          min: 100,
+          max: 11500,
+          color: ['#ffd500', '#e57efc'],
           textStyle: {
             color: '#fff'
           }
@@ -111,5 +111,11 @@ export default {
   box-shadow: 0 0 25px #909399;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.1);
+}
+.textX {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: bold;
+  text-align: left;
 }
 </style>

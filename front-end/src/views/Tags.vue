@@ -7,11 +7,11 @@
     </el-radio-group>
 
     <div class="show" v-if="showTable === 'frequency'">
-      <div style="flex-basis: 65%;">
+      <div style="flex-basis: 70%;">
         <div id="wordCloudChart" style="height: 600px;"></div>
       </div>
-      <div style="flex-basis: 35%;">
-        <el-card style="text-align: left;width:70%" class="wrapperCard">
+      <div style="flex-basis: 30%;">
+        <el-card style="text-align: left;width:80%" class="wrapperCard">
           <el-scrollbar height="560px">
             <div v-for="(item, index) in topTags" :key="index">
               <el-card class="showCard">
@@ -32,7 +32,9 @@
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
         <div style="flex-basis: 70%">
           <el-card class="showCard">
-            <h3 style="color: blueviolet">tags or tag combinations receive the most upvotes</h3>
+            <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+              Tags or tag combinations receive the most upvotes
+            </div>
             <div v-for="(item, index) in top5Upvote" :key="index">
               <div class="text">
                 <i class="el-icon-s-flag other"></i>
@@ -53,7 +55,9 @@
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
         <div style="flex-basis: 70%">
           <el-card class="showCard">
-            <h3 style="color: blueviolet">tags or tag combinations receive the most views</h3>
+            <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+              Tags or tag combinations receive the most views
+            </div>
             <div v-for="(item, index) in top5view" :key="index">
               <div class="text">
                 <i class="el-icon-s-flag other"></i>
@@ -345,7 +349,7 @@ export default {
   box-shadow: 0 0 25px #909399;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 2.5%;
+  margin-bottom: 1.5%;
 }
 
 .wrapperCard {
