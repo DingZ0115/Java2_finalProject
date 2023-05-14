@@ -54,5 +54,13 @@ public class UserController {
         return userService.getMostCommentUser();
     }
 
+    @GetMapping("/getMostActiveUser")
+    @ApiOperation(value = "User Who Most Active")
+    public Result getMostActiveUser(){return userService.getMostActiveUser();}
+
+    @GetMapping("/getUserDistributionOfCommunication")
+    @ApiOperation(value = "User Distribution Of Communication")
+    public Result getUserDistributionOfCommunication(){return userService.getUserDistributionOfCommunication();}
+
 
 }

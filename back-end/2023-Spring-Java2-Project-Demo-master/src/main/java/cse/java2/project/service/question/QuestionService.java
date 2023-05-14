@@ -3,14 +3,13 @@ package cse.java2.project.service.question;
 import cse.java2.project.common.Result;
 import cse.java2.project.entity.Range;
 import cse.java2.project.mapper.QuestionMapper;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -85,6 +84,23 @@ public class QuestionService {
 
     }
 
+    public Result getDistributionOfQuestionDeltaTimes() {
+        List<Integer> post = questionMapper.getPostQuestionTimes();
+        List<Integer> accept = questionMapper.getAcceptedQuestionTimes();
+
+        int[][] array = new int[post.size()][2];
+
+        for (int i = 0; i < post.size(); i++) {
+            int delta = accept.get(i) - post.get(i);
+            if (delta < 3000) {
+                array[i][0] = delta / 60;
+                array[i][1] = delta - 60 * (delta / 60);
+            }
+        }
+        return Result.ok().code(200).message("success").addData("distribution", array);
+    }
+
+
     private static double round(double v, int scale) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
@@ -93,5 +109,6 @@ public class QuestionService {
         BigDecimal one = new BigDecimal("1");
         return b.divide(one, scale, RoundingMode.HALF_UP).doubleValue();
     }
+
 
 }

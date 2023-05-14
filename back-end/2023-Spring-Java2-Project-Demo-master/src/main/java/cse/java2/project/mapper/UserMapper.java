@@ -34,4 +34,13 @@ public interface UserMapper {
 
     @Select("select user_name from users where comment_num = #{cnt}")
     List<String> getUsersByComment(int cnt);
+
+    @Select("select account_id from (SELECT account_id, SUM(post_num * 0.2 + answer_num * 0.5 + comment_num * 0.3) as ff FROM users GROUP BY account_id order by ff desc ) as b limit 3;")
+    List<Integer> getMostActiveUser();
+
+    @Select("select max(comm_num) from question;")
+    int getMaxCommNum(int cnt);
+
+    @Select("select count(*) from question where comm_num >= #{leftRange} and comm_num < #{rightRange};")
+    int getUserRangeDistributionOfComm(int leftRange, int rightRange);
 }

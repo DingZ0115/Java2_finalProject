@@ -40,5 +40,10 @@ public interface QuestionMapper {
     @Select("select question_id from question where accepted_answer is true;")
     List<Integer> getAcceptQuestionId();
 
+    @Select("select accept_time from question where accepted_answer is true;")
+    List<Integer> getAcceptedQuestionTimes();
+
+    @Select("select post_time from question where accepted_answer is true;")
+    List<Integer> getPostQuestionTimes();
 
 }

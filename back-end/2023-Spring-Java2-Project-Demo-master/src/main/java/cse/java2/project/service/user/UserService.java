@@ -17,31 +17,20 @@ public class UserService {
     UserMapper userMapper;
 
     public Result getUserDistributionOfPost() {
-        int maxPostNum = userMapper.getMaxPostNum();
         List<Range> listRange = new ArrayList<>();
-        int r = (int) Math.round((double) maxPostNum / 8);
-        int left = 0;
-        int right = r;
-        for (int i = 0; i < 7; i++) {
-            String tName = left + " - " + right;
-            String tValue = String.valueOf(userMapper.getUserRangeDistributionOfPosting(left, right));
-            left += r;
-            right += r;
-            listRange.add(new Range(tName, tValue));
-        }
-        String tName = left + " - " + maxPostNum;
-        String tValue = String.valueOf(userMapper.getUserRangeDistributionOfPosting(left, maxPostNum + 1));
-        listRange.add(new Range(tName, tValue));
+        listRange.add(new Range("The number of user who post 0 question", String.valueOf(userMapper.getUserRangeDistributionOfPosting(0, 1))));
+        listRange.add(new Range("The number of user who post 1 question", String.valueOf(userMapper.getUserRangeDistributionOfPosting(1, 2))));
+        listRange.add(new Range("The number of user who post 2 questions", String.valueOf(userMapper.getUserRangeDistributionOfPosting(2, 3))));
         return Result.ok().code(200).message("success").addData("distribution", listRange);
     }
 
     public Result getUserDistributionOfAnswer() {
         int maxAnswer = userMapper.getMaxAnswerNum();
         List<Range> listRange = new ArrayList<>();
-        int r = (int) Math.round((double) maxAnswer / 8);
+        int r = (int) Math.round((double) maxAnswer / 5);
         int left = 0;
         int right = r;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             String tName = left + " - " + right;
             String tValue = String.valueOf(userMapper.getUserRangeDistributionOfAnswer(left, right));
             left += r;
@@ -54,13 +43,13 @@ public class UserService {
         return Result.ok().code(200).message("success").addData("distribution", listRange);
     }
 
-    public Result getUserDistributionOfComment(){
+    public Result getUserDistributionOfComment() {
         int maxComment = userMapper.getMaxCommentNum();
         List<Range> listRange = new ArrayList<>();
-        int r = (int) Math.round((double) maxComment / 8);
+        int r = (int) Math.round((double) maxComment / 5);
         int left = 0;
         int right = r;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 4; i++) {
             String tName = left + " - " + right;
             String tValue = String.valueOf(userMapper.getUserRangeDistributionOfComment(left, right));
             left += r;
@@ -88,12 +77,36 @@ public class UserService {
         return Result.ok().code(200).message("success").addData("user", user);
     }
 
-    public Result getMostCommentUser(){
+    public Result getMostCommentUser() {
         int comment = userMapper.getMaxCommentNum();
         List<String> user_name = userMapper.getUsersByComment(comment);
-        Users user = new Users(user_name.get(0),comment);
+        Users user = new Users(user_name.get(0), comment);
         return Result.ok().code(200).message("success").addData("user", user);
     }
 
+    public Result getMostActiveUser() {
+        List<Integer> uid = userMapper.getMostActiveUser();
+        return Result.ok().code(200).message("success").addData("user", uid);
+    }
+
+    public Result getUserDistributionOfCommunication() {
+        int maxCommentNum = userMapper.getMaxCommNum(145);
+        List<Range> listRange = new ArrayList<>();
+        int r = (int) Math.round((double) maxCommentNum / 4);
+        int left = 0;
+        int right = r;
+        for (int i = 0; i < 4; i++) {
+            String tName = left + " - " + right;
+            String tValue = String.valueOf(userMapper.getUserRangeDistributionOfComm(left, right));
+            left += r;
+            right += r;
+            listRange.add(new Range(tName, tValue));
+        }
+        String tName = left + " - " + maxCommentNum;
+        String tValue = String.valueOf(userMapper.getUserRangeDistributionOfComm(left, maxCommentNum + 1));
+        listRange.add(new Range(tName, tValue));
+
+        return Result.ok().code(200).message("success").addData("distribution", listRange);
+    }
 
 }

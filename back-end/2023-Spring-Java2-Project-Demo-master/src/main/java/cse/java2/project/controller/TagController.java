@@ -30,13 +30,18 @@ public class TagController {
     public Result getTop5UpvoteTags() {
         return tagService.getTop5UpvoteTags();
     }
-    @GetMapping("/getTop10AppearWithJavaTags")
-    @ApiOperation(value = "Top 10 Appear Together with Java Tags")
-    public Result getTop10AppearWithJavaTags(){
-        return tagService.getTop10AppearWithJavaTags();
+    @GetMapping("/getTop15AppearWithJavaTags")
+    @ApiOperation(value = "Top 15 Appear Together with Java Tags")
+    public Result getTop15AppearWithJavaTags(){
+        return tagService.getTop15AppearWithJavaTags();
     }
 
 
+    @GetMapping("/getJavaAPI")
+    @ApiOperation(value = "Top 30 Java API")
+    public Result getJavaAPI(){
+        return tagService.getJavaAPI();
+    }
 
 
 }

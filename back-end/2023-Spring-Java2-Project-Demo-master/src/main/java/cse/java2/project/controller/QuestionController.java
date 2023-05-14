@@ -54,5 +54,11 @@ public class QuestionController {
         return questionService.getBetterRatio();
     }
 
+    @GetMapping("/getDistrutionOfQuestionDeltaTimes")
+    @ApiOperation(value = "Distribution Of Question post and accept time")
+    public Result getDistrutionOfQuestionDeltaTimes(){return questionService.getDistributionOfQuestionDeltaTimes();}
+
+
+
 
 }
