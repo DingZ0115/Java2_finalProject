@@ -1,13 +1,14 @@
 <template>
   <div class="clientNavbar">
     <el-menu class="navbar" :default-active="this.$route.path" router mode="horizontal" @open="handleOpen"
-             @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+             @close="handleClose" background-color="#00133d" text-color="#fff" active-text-color="#ffd04b">
 
       <div class="navbar-container">
         <el-menu-item index="/numberOfAnswers">Number Of Answers</el-menu-item>
         <el-menu-item index="/acceptedAnswers">Accepted Answers</el-menu-item>
         <el-menu-item index="/tags">Tags</el-menu-item>
         <el-menu-item index="/users">Users</el-menu-item>
+        <el-menu-item index="/javaAPI">Java API</el-menu-item>
       </div>
     </el-menu>
     <router-view></router-view>
@@ -61,6 +62,8 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-
+.el-menu{
+  border:0!important;
+}
 </style>
 

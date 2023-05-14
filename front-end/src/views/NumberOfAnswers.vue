@@ -2,7 +2,7 @@
   <div class="numberOfAnswers">
     <div class="show">
       <div style="flex-basis: 47%">
-        <el-card>
+        <el-card class="showCard">
           <div class="text">
             <i class="el-icon-bell"></i>
             percentage of questions don't have any answer: {{ percentage }}
@@ -19,7 +19,7 @@
       </div>
       <div style="flex-basis: 50%">
         <div id="chart" style="height:400px;"></div>
-        <span>有0-4个answer的question有多少个</span>
+        <span style="color: white">有0-4个answer的question有多少个</span>
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@ export default {
             textStyle: {
               fontStyle: 'oblique',
               fontSize: 20,
-              color: '#0c56ff'
+              color: '#fff'
             },
             left: 'center'
           },
@@ -106,7 +106,10 @@ export default {
           legend: {
             bottom: 10,
             left: 'center',
-            data: _this.names
+            data: _this.names,
+            textStyle: {
+              color: 'white' // 设置轴标签的文本颜色为白色
+            }
           },
           series: [
             {
@@ -121,6 +124,10 @@ export default {
                   shadowOffsetX: 0,
                   shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
+              },
+              label: {
+                show: true,
+                color: 'white' // 设置标签文本颜色为白色
               }
             }
           ]
@@ -136,4 +143,10 @@ export default {
 </script>
 
 <style scoped>
+.showCard {
+  border: 1px solid #dccfcf;
+  box-shadow: 0 0 25px #909399;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
 </style>

@@ -77,9 +77,10 @@ export default {
 
 .title {
   font-size: 20px;
-  color: #0c56ff;
+  color: #fff;
   margin-bottom: 2%;
   font-style: oblique;
   font-weight: bold;
 }
+
 </style>

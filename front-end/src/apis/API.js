@@ -57,3 +57,59 @@ export function getTop5ViewTags() {
         url: '/tag/getTop5ViewTags'
     })
 }
+
+export function getTop15AppearWithJavaTags() {
+    return request({
+        method: 'GET',
+        url: '/tag/getTop15AppearWithJavaTags'
+    })
+}
+
+export function getUserDistributionOfPost() {
+    return request({
+        method: 'GET',
+        url: '/user/getUserDistributionOfPost'
+    })
+}
+
+export function getUserDistributionOfAnswer() {
+    return request({
+        method: 'GET',
+        url: '/user/getUserDistributionOfAnswer'
+    })
+}
+
+export function getUserDistributionOfComment() {
+    return request({
+        method: 'GET',
+        url: '/user/getUserDistributionOfComment'
+    })
+}
+
+export function getUserDistributionOfCommunication() {
+    return request({
+        method: 'GET',
+        url: '/user/getUserDistributionOfCommunication'
+    })
+}
+
+export function getMostActiveUser() {
+    return request({
+        method: 'GET',
+        url: '/user/getMostActiveUser'
+    })
+}
+
+export function getDistrutionOfQuestionDeltaTimes() {
+    return request({
+        method: 'GET',
+        url: '/question/getDistrutionOfQuestionDeltaTimes'
+    })
+}
+
+export function getJavaAPI() {
+    return request({
+        method: 'GET',
+        url: '/tag/getJavaAPI'
+    })
+}

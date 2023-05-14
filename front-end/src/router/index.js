@@ -5,6 +5,7 @@ import NumberOfAnswers from "@/views/NumberOfAnswers";
 import AcceptedAnswers from "@/views/AcceptedAnswers";
 import Tags from "@/views/Tags";
 import Users from "@/views/Users";
+import JavaAPI from "@/views/JavaAPI";
 
 const routes = [
     {
@@ -33,6 +34,11 @@ const routes = [
                 path: '/users',
                 name: 'users',
                 component: Users,
+            },
+            {
+                path: '/javaAPI',
+                name: 'javaAPI',
+                component: JavaAPI,
             },
         ]
     },
