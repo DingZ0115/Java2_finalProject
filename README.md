@@ -5,7 +5,7 @@
 | SID      | Name       | Contribution ratio | Github ID |
 | -------- | ---------- | ------------------ | --------- |
 | 12011736 | Zhe DING   | 50%                | DingZ0115 |
-|          | Zexuan Jia | 50%                | Kazawaryu |
+| 12011126 | Zexuan Jia | 50%                | Kazawaryu |
 
 
 
