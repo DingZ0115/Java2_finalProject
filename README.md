@@ -2,10 +2,10 @@
 
 ## 1.	Contributors
 
-| SID  | Name | Contribution ratio | Github ID |
-| ---- | ---- | ------------------ | --------- |
-|      |      |                    |           |
-|      |      |                    |           |
+| SID      | Name       | Contribution ratio | Github ID |
+| -------- | ---------- | ------------------ | --------- |
+| 12011736 | Zhe DING   | 50%                | DingZ0115 |
+|          | Zexuan Jia | 50%                | Kazawaryu |
 
 
 
@@ -13,11 +13,21 @@
 
 ### 2.1	Front-end
 
+This project uses Vue3 as a front-end development framework, combined with component libraries such as Element Plus and Echarts, for data visualization. The structure is as follows:
 
-
-
-
-
+```
+Front-end
+├─public
+└─src
+    ├─apis
+    ├─assets
+    ├─components
+    ├─plugins
+    ├─router
+    ├─store
+    ├─utils
+    └─views
+```
 
 ### 2.2	Back-end
 
@@ -60,6 +70,45 @@ public void updateUserFromDB() throws SQLException, IOException;
 The above four methods are used to update the database using the API interface crawler. The basic idea is: construct the access URI, apply for the return value in JSON format, process the returned data, and write to the database.  More details at `config\DBconfig` .
 
 ### 3.2	Front-end communication
+
+#### Front-end
+
+The front end uses axios to interact with the back end. In addition, the front end encapsulates the API code, making it easy to write and manage.
+
+```js
+import api from './apis'
+app.config.globalProperties.$api = api;
+```
+
+```javascript
+export function getTop5UpvoteTags() {
+    return request({
+        method: 'GET',
+        url: '/tag/getTop5UpvoteTags'
+    })
+}
+```
+
+```javascript
+import axios from "axios";
+const request = axios.create({
+    baseURL: 'http://10.24.125.235:8080',
+    timeout: 5000
+})
+export default request
+```
+
+```javascript
+this.$api.API.getTop5UpvoteTags().then((resp) => {
+          _this.top5Upvote = resp.data.data.list1
+          _this.xValue_upvote = resp.data.data.list2
+          _this.showUpvotes()
+        }).catch(err => {
+          console.log(err);
+        });
+```
+
+#### Back-end
 
 ```java
 @Configuration
