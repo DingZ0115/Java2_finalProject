@@ -1,13 +1,134 @@
 <template>
   <div class="homePage">
-    <h1>HomePage</h1>
+    <div class="typer">
+      <div class="typer-content">
+        <!--        <p class="typer-static">I'm&nbsp;</p>-->
+        <!-- 动态变化的内容-->
+        <p class="typer-dynamic">
+          <span class="cut">
+            <span class="word" v-for="(letter,index) in words" :key="index">{{ letter }}</span>
+          </span>
+          <!-- 模拟光标-->
+          <span class="typer-cursor"></span>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
+
+
 <script>
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  data() {
+    return {
+      words: [],               //字母数组push，pop的载体
+      str: "Stack overflow data analysis platform!",          //str初始化
+      letters: [],             //str分解后的字母数组
+      order: 1,                //表示当前是第几句话
+    }
+  },
+  watch: {                     //监听order值的变化，改变str的内容
+    order(old, newV) {
+      if (this.order % 4 === 1) {
+        this.str = "Stack overflow data analysis platform!"
+      } else if (this.order % 4 === 2) {
+        this.str = "Powered by Zhe DING and Zexuan Jia"
+      } else if (this.order % 4 === 3) {
+        this.str = "A web application that stores, analyzes, and visualizes Stack Overflow Q&A data w.r.t. java programming"
+      } else {
+        this.str = "With the purpose of understanding the common questions, answers, and resolution processes associated with Java programming.\n"
+      }
+    }
+  },
+  mounted() {            //页面初次加载后调用begin()开始动画
+    this.begin()
+  },
+  methods: {
+    //开始输入的效果动画
+    begin() {
+      this.letters = this.str.split("")
+      for (var i = 0; i < this.letters.length; i++) {
+        setTimeout(this.write(i), i * 100);
+      }
+    },
+    //开始删除的效果动画
+    back() {
+      let L = this.letters.length;
+      for (var i = 0; i < L; i++) {
+        setTimeout(this.wipe(i), i * 50);
+      }
+    },
+    //输入字母
+    write(i) {
+      return () => {
+        let L = this.letters.length;
+        this.words.push(this.letters[i]);
+        let that = this;
+        /*如果输入完毕，在2s后开始删除*/
+        if (i == L - 1) {
+          setTimeout(function () {
+            that.back();
+          }, 2000);
+
+        }
+      }
+    },
+    //擦掉(删除)字母
+    wipe(i) {
+      return () => {
+        this.words.pop(this.letters[i]);
+        /*如果删除完毕，在300ms后开始输入*/
+        if (this.words.length == 0) {
+          this.order++;
+          let that = this;
+          setTimeout(function () {
+            that.begin();
+          }, 300);
+
+        }
+      }
+    },
+
+  },
 }
 </script>
 
+
 <style scoped>
+.typer {
+  margin-top: 2%;
+  box-sizing: border-box;
+}
+
+.typer .typer-content {
+  font-weight: bold;
+  font-size: 50px;
+  display: flex;
+  flex-direction: row;
+  letter-spacing: 2px;
+}
+
+.typer-dynamic {
+  /*position: relative;*/
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+
+.cut {
+  color: #fff;
+}
+
+.typer-cursor {
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  top: 0;
+  right: -10px;
+  background-color: #fff;
+  animation: flash 1.5s linear infinite;
+}
 </style>
+
+
