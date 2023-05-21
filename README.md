@@ -5,7 +5,7 @@
 | SID      | Name       | Contribution ratio | Github ID |
 | -------- | ---------- | ------------------ | --------- |
 | 12011736 | Zhe DING   | 50%                | DingZ0115 |
-|          | Zexuan Jia | 50%                | Kazawaryu |
+| 12011126 | Zexuan Jia | 50%                | Kazawaryu |
 
 
 
@@ -13,7 +13,7 @@
 
 ### 2.1	Front-end
 
-This project uses Vue3 as a front-end development framework, combined with component libraries such as Element Plus and Echarts, for data visualization. The structure is as follows:
+This project uses **Vue3** as a front-end development framework, combined with component libraries such as **Element Plus** and **Echarts**, for data visualization. The structure is as follows:
 
 ```
 Front-end
@@ -48,28 +48,7 @@ In SpringBoot, the project uses MyBatis to interact with the database, which fac
 
 <img src="images\backendFramework.png" alt="backendFramework" style="zoom:67%;" />
 
-### 2.3	Database
-
-Since this project does not involve large-scale data interaction, a relational database is not used in the database, but a non-relational database is used lightly to speed up query and response. When adding or modifying data, the server judges whether the data is legal.
-
-<img src="images\databaseFramework.png" alt="databaseFramework" style="zoom:50%;" />
-
-
-
-## 3.	Code Details
-
-### 3.1	Update data from Website
-
-```java
-public void updateQuestionAndTagFromWeb() throws URISyntaxException, IOException, SQLException;
-public void updateAnswerFromDB() throws SQLException, URISyntaxException, IOException;
-public void updateJavaAPIFromWeb() throws IOException, SQLException;
-public void updateUserFromDB() throws SQLException, IOException;
-```
-
-The above four methods are used to update the database using the API interface crawler. The basic idea is: construct the access URI, apply for the return value in JSON format, process the returned data, and write to the database.  More details at `config\DBconfig` .
-
-### 3.2	Front-end communication
+### 2.3	Front-end communication
 
 #### Front-end
 
@@ -124,6 +103,57 @@ public class SwaggerConfig implements WebMvcConfigurer {
 ```
 
 Swagger is a specification and complete framework for generating, describing, invoking and visualizing RESTful web services. Swagger is a specification and complete framework for generating, describing, invoking and visualizing RESTful web services. To use the Swagger framework, you need to register the interface during initialization and open the relevant permissions. More details at `config\SwaggerConfig` .
+
+### 2.4	Database
+
+Since this project does not involve large-scale data interaction, a relational database is not used in the database, but a non-relational database is used lightly to speed up query and response. When adding or modifying data, the server judges whether the data is legal.
+
+<img src="images\databaseFramework.png" alt="databaseFramework" style="zoom:50%;" />
+
+## 3.	Crawler frame and ideas
+
+```java
+public void updateQuestionAndTagFromWeb() throws URISyntaxException, IOException, SQLException;
+public void updateAnswerFromDB() throws SQLException, URISyntaxException, IOException;
+public void updateJavaAPIFromWeb() throws IOException, SQLException;
+public void updateUserFromDB() throws SQLException, IOException;
+```
+
+The above four methods are used to update the database using the API interface crawler. The basic idea is: construct the access URI, apply for the return value in JSON format, process the returned data, and write to the database.  More details at `config\DBconfig` .
+
+## 4.	Code Details
+
+### 4.1	Number of Answers
+
+
+
+### 4.2	Accepted Answers 
+
+
+
+### 4.3	Tags
+
+
+
+### 4.4	Users
+
+
+
+### 4.5	Frequently discussed  Java APIs 
+
+
+
+### 4.6	REST services 
+
+
+
+
+
+
+
+### 3.1	Update data from Website
+
+### 3.2	Front-end communication
 
 ### 3.3	Get Java API popularity
 

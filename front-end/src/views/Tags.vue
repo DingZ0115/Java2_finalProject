@@ -25,51 +25,103 @@
         </el-card>
       </div>
     </div>
-    <div v-if="showTable === 'upvotes'">
-      <div id="upvoteChart" style="height:300px;width:700px;margin:auto"></div>
+    <div v-if="showTable === 'upvotes'" class="parallel">
+      <div style="flex-basis: 50%">
 
-      <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+        <div id="upvoteChart" style="height:300px;width:600px;margin:auto"></div>
+
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
-        <div style="flex-basis: 70%">
-          <el-card class="showCard">
-            <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
-              Tags or tag combinations receive the most upvotes
-            </div>
-            <div v-for="(item, index) in top5Upvote" :key="index">
-              <div class="text">
-                <i class="el-icon-s-flag other"></i>
-                {{ index + 1 }}. {{ item }}
+          <div style="flex-basis:30%;">
+            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+          </div>
+          <div style="flex-basis: 70%">
+            <el-card class="showCard">
+              <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+                Tags receive the most upvotes
               </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="flex-basis: 30%;">
-          <img style="width:200px;display: block;" src="../assets/YiJi.png" alt="">
-        </div>
-      </el-card>
+              <div v-for="(item, index) in top5Upvote" :key="index">
+                <div class="text">
+                  <i class="el-icon-s-flag other"></i>
+                  {{ index + 1 }}. {{ item }}
+                </div>
+              </div>
+            </el-card>
+          </div>
+        </el-card>
+      </div>
+
+      <div style="flex-basis: 50%">
+        <div id="upvoteComChart" style="height:300px;width:600px;margin:auto"></div>
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+                justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
+          <div style="flex-basis: 70%">
+            <el-card class="showCard">
+              <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+                Tag combinations receive the most upvotes
+              </div>
+              <div v-for="(item, index) in top5UpvoteCom" :key="index">
+                <div class="text">
+                  <i class="el-icon-s-flag other"></i>
+                  {{ index + 1 }}. {{ item }}
+                </div>
+              </div>
+            </el-card>
+          </div>
+          <div style="flex-basis:30%;">
+            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+          </div>
+        </el-card>
+      </div>
     </div>
 
-    <div v-if="showTable === 'views'">
-      <div id="viewChart" style="height:300px;width:700px;margin:auto"></div>
-      <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+    <div v-if="showTable === 'views'" class="parallel">
+      <div style="flex-basis: 50%">
+
+        <div id="viewChart" style="height:300px;width:600px;margin:auto"></div>
+
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
-        <div style="flex-basis: 70%">
-          <el-card class="showCard">
-            <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
-              Tags or tag combinations receive the most views
-            </div>
-            <div v-for="(item, index) in top5view" :key="index">
-              <div class="text">
-                <i class="el-icon-s-flag other"></i>
-                {{ index + 1 }}. {{ item }}
+          <div style="flex-basis:30%;">
+            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+          </div>
+          <div style="flex-basis: 70%">
+            <el-card class="showCard">
+              <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+                Tags receive the most views
               </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="flex-basis: 30%;">
-          <img style="width:200px;display: block;" src="../assets/YiJi.png" alt="">
-        </div>
-      </el-card>
+              <div v-for="(item, index) in top5view" :key="index">
+                <div class="text">
+                  <i class="el-icon-s-flag other"></i>
+                  {{ index + 1 }}. {{ item }}
+                </div>
+              </div>
+            </el-card>
+          </div>
+        </el-card>
+      </div>
+
+      <div style="flex-basis: 50%">
+
+        <div id="viewComChart" style="height:300px;width:600px;margin:auto"></div>
+
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+                justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
+          <div style="flex-basis: 70%">
+            <el-card class="showCard">
+              <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
+                Tag combination receive the most views
+              </div>
+                            <div v-for="(item, index) in 5" :key="index" style="margin-bottom: 2%">
+                              <el-tag v-for="(type, index) in types" :key="index" :type="type">{{ type }}</el-tag>
+                            </div>
+            </el-card>
+          </div>
+          <div style="flex-basis:30%;">
+            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+          </div>
+        </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -89,12 +141,19 @@ export default {
         {value: 26, name: 'iPhone 12 pro max'},
         {value: 25, name: 'HUAWEI MATE 10'},
         {value: 24, name: 'ONEPLUS'},],
-      top5Upvote: [],
-      top5view: [],
       topTags: [],
+      top5Upvote: [],
+      top5UpvoteCom: [],
+      top5view: [],
+      top5viewCom: [],
       showTable: 'frequency',
       xValue_upvote: [],
+      xValue_upvoteCom: [],
       xValue_view: [],
+      xValue_viewCom: [],
+      types: ["warning", "success", "danger", "info", "primary", "text"],
+      list1: [],
+      list2: [],
     }
   },
   methods: {
@@ -223,6 +282,84 @@ export default {
       // 使用刚指定的配置项和数据显示图表。
       chart.setOption(option);
     },
+    showUpvotesCom() {
+      const chart = echarts.init(document.getElementById('upvoteComChart'))
+      const option = {
+        color: ['#d84430'],
+        tooltip: {
+          show: true
+        },
+        yAxis: {
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            inside: true,
+            verticalAlign: 'bottom',
+            lineHeight: 40,
+            color: '#DDDFEB',
+            rich: {
+              other: {
+                color: '#DDDFEB',
+                opacity: 0.57
+              },
+              first: {
+                color: '#DDDFEB'
+              }
+            }
+          },
+          data: this.top5UpvoteCom
+        },
+        xAxis: {
+          nameTextStyle: {
+            color: 'rgba(255, 255, 255, 0.8)',
+            align: 'right'
+          },
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+        },
+        grid: {
+          top: '0%',
+          bottom: '0%',
+          left: '0%',
+          right: '0%'
+        },
+        series: [{
+          name: '排行榜',
+          barWidth: 15,
+          type: 'bar',
+          data: this.xValue_upvoteCom,
+          itemStyle: {
+            normal: {
+              borderRadius: [3, 20, 20, 3],
+              color: function (params) {   // 设置柱形图的颜色
+                if (params.dataIndex === 4) {
+                  return '#82009a'
+                } else if (params.dataIndex === 3) {
+                  return '#be17e0'
+                } else if (params.dataIndex === 2) {
+                  return '#be61e1'
+                } else {
+                  return '#d3a6e3'
+                }
+              }
+            },
+          }
+        }]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      chart.setOption(option);
+    },
     showViews() {
       const chart = echarts.init(document.getElementById('viewChart'))
       const option = {
@@ -285,13 +422,90 @@ export default {
               borderRadius: [3, 20, 20, 3],
               color: function (params) {   // 设置柱形图的颜色
                 if (params.dataIndex === 4) {
-                  return '#d84430'
+                  return '#016e04'
                 } else if (params.dataIndex === 3) {
-                  return '#f38237'
+                  return '#05b213'
                 } else if (params.dataIndex === 2) {
-                  return '#e2aa20'
+                  return '#59da56'
                 } else {
-                  return '#608289'
+                  return '#b9f8b4'
+                }
+              }
+            },
+          }
+        }]
+      };
+      chart.setOption(option);
+    },
+    showViewsCom() {
+      const chart = echarts.init(document.getElementById('viewComChart'))
+      const option = {
+        color: ['#d84430'],
+        tooltip: {
+          show: true
+        },
+        yAxis: {
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            inside: true,
+            verticalAlign: 'bottom',
+            lineHeight: 40,
+            color: '#DDDFEB',
+            rich: {
+              other: {
+                color: '#DDDFEB',
+                opacity: 0.57
+              },
+              first: {
+                color: '#DDDFEB'
+              }
+            }
+          },
+          data: this.top5viewCom
+        },
+        xAxis: {
+          nameTextStyle: {
+            color: 'rgba(255, 255, 255, 0.8)',
+            align: 'right'
+          },
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: 'rgba(255, 255, 255, 0.8)'
+          },
+        },
+        grid: {
+          top: '0%',
+          bottom: '0%',
+          left: '0%',
+          right: '0%'
+        },
+        series: [{
+          name: '排行榜',
+          barWidth: 15,
+          type: 'bar',
+          data: this.xValue_viewCom,
+          itemStyle: {
+            normal: {
+              borderRadius: [3, 20, 20, 3],
+              color: function (params) {   // 设置柱形图的颜色
+                if (params.dataIndex === 4) {
+                  return '#6e2e01'
+                } else if (params.dataIndex === 3) {
+                  return '#b24705'
+                } else if (params.dataIndex === 2) {
+                  return '#da8956'
+                } else {
+                  return '#f8cc8b'
                 }
               }
             },
@@ -318,11 +532,29 @@ export default {
         }).catch(err => {
           console.log(err);
         });
+        this.$api.API.getTagsUpvoteComb().then((resp) => {
+          _this.top5UpvoteCom = resp.data.data.list1
+          _this.xValue_upvoteCom = resp.data.data.list2
+          _this.showUpvotesCom()
+        }).catch(err => {
+          console.log(err);
+        });
       } else if (this.showTable === 'views') {
         this.$api.API.getTop5ViewTags().then((resp) => {
           _this.top5view = resp.data.data.list1
           _this.xValue_view = resp.data.data.list2
           _this.showViews()
+        }).catch(err => {
+          console.log(err);
+        });
+        this.$api.API.getTagsViewComb().then((resp) => {
+          _this.top5viewCom = resp.data.data.list1
+          _this.xValue_viewCom = resp.data.data.list2
+          for (const ele of _this.top5viewCom) {
+            const temp = ele.split(', ');
+            _this.list1.push(temp)
+          }
+          _this.showViewsCom()
         }).catch(err => {
           console.log(err);
         });
@@ -336,6 +568,15 @@ export default {
 </script>
 
 <style scoped>
+.parallel {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
 .first {
   color: #ff0000;
 }
@@ -365,7 +606,7 @@ export default {
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.1);
   text-align: left;
-  width: 55%;
+  width: 90%;
   margin: auto;
 }
 

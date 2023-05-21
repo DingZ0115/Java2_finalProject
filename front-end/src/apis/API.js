@@ -113,3 +113,16 @@ export function getJavaAPI() {
         url: '/tag/getJavaAPI'
     })
 }
+export function getTagsUpvoteComb() {
+    return request({
+        method: 'GET',
+        url: '/tag/getTagsUpvoteComb'
+    })
+}
+
+export function getTagsViewComb() {
+    return request({
+        method: 'GET',
+        url: '/tag/getTagsViewComb'
+    })
+}
