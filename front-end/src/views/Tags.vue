@@ -30,7 +30,7 @@
 
         <div id="upvoteChart" style="height:300px;width:600px;margin:auto"></div>
 
-        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap',
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
           <div style="flex-basis:30%;">
             <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
@@ -41,9 +41,9 @@
                 Tags receive the most upvotes
               </div>
               <div v-for="(item, index) in top5Upvote" :key="index">
-                <div class="text">
+                <div class="text" style="display: inline">
                   <i class="el-icon-s-flag other"></i>
-                  {{ index + 1 }}. {{ item }}
+                  {{ index + 1 }}.&nbsp;&nbsp; {{ item }}
                 </div>
               </div>
             </el-card>
@@ -53,7 +53,7 @@
 
       <div style="flex-basis: 50%">
         <div id="upvoteComChart" style="height:300px;width:600px;margin:auto"></div>
-        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap',
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
           <div style="flex-basis: 70%">
             <el-card class="showCard">
@@ -61,15 +61,15 @@
                 Tag combinations receive the most upvotes
               </div>
               <div v-for="(item, index) in top5UpvoteCom" :key="index">
-                <div class="text">
+                <div class="text" style="display: inline">
                   <i class="el-icon-s-flag other"></i>
-                  {{ index + 1 }}. {{ item }}
+                  {{ index + 1 }}.&nbsp;&nbsp; {{ item }}
                 </div>
               </div>
             </el-card>
           </div>
           <div style="flex-basis:30%;">
-            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+            <img style="width:100%;display: block;" src="../assets/1.png" alt="">
           </div>
         </el-card>
       </div>
@@ -80,10 +80,10 @@
 
         <div id="viewChart" style="height:300px;width:600px;margin:auto"></div>
 
-        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap',
                 justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
           <div style="flex-basis:30%;">
-            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+            <img style="width:100%;display: block;" src="../assets/2.png" alt="">
           </div>
           <div style="flex-basis: 70%">
             <el-card class="showCard">
@@ -91,9 +91,9 @@
                 Tags receive the most views
               </div>
               <div v-for="(item, index) in top5view" :key="index">
-                <div class="text">
+                <div class="text" style="display: inline">
                   <i class="el-icon-s-flag other"></i>
-                  {{ index + 1 }}. {{ item }}
+                  {{ index + 1 }}.&nbsp;&nbsp; {{ item }}
                 </div>
               </div>
             </el-card>
@@ -105,20 +105,23 @@
 
         <div id="viewComChart" style="height:300px;width:600px;margin:auto"></div>
 
-        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap', textAlign: 'center',
-                justifyContent: 'center', alignItems: 'center' }" class="wrapperCardVote">
+        <el-card :body-style="{ display: 'flex', flexWrap: 'wrap',justifyContent: 'center', alignItems: 'center' }"
+                 class="wrapperCardVote">
           <div style="flex-basis: 70%">
             <el-card class="showCard">
               <div style="color: #d84430;font-size: 20px; font-weight: bold;margin-bottom: 2%">
                 Tag combination receive the most views
               </div>
-                            <div v-for="(item, index) in 5" :key="index" style="margin-bottom: 2%">
-                              <el-tag v-for="(type, index) in types" :key="index" :type="type">{{ type }}</el-tag>
-                            </div>
+              <div v-for="(item, index) in list1" :key="index" style="margin-bottom: 2%">
+                <div class="text" style="display: inline">
+                  {{ index + 1 }}. &nbsp;&nbsp;
+                </div>
+                <el-tag v-for="(xx, innerIndex) in item" :key="innerIndex" :type="types[innerIndex]">{{ xx }}</el-tag>
+              </div>
             </el-card>
           </div>
           <div style="flex-basis:30%;">
-            <img style="width:100%;display: block;" src="../assets/YiJi.png" alt="">
+            <img style="width:100%;display: block;" src="../assets/3.png" alt="">
           </div>
         </el-card>
       </div>
@@ -153,7 +156,6 @@ export default {
       xValue_viewCom: [],
       types: ["warning", "success", "danger", "info", "primary", "text"],
       list1: [],
-      list2: [],
     }
   },
   methods: {
@@ -550,6 +552,7 @@ export default {
         this.$api.API.getTagsViewComb().then((resp) => {
           _this.top5viewCom = resp.data.data.list1
           _this.xValue_viewCom = resp.data.data.list2
+          _this.list1 = []
           for (const ele of _this.top5viewCom) {
             const temp = ele.split(', ');
             _this.list1.push(temp)

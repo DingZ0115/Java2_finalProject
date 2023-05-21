@@ -3,7 +3,7 @@
     <div class="logoBox">
       <router-link active-class="initial" to="HomePage">
         <div class="logo">
-          <img src="../assets/YiJi.png" alt="">
+          <img src="../assets/1.png" alt="">
         </div>
       </router-link>
     </div>
@@ -69,10 +69,9 @@ export default {
 
 .text {
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.8;
   font-weight: bold;
   text-align: left;
-  margin-bottom: 2%;
 }
 
 .title {
