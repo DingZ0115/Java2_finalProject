@@ -275,7 +275,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            name: '# answers',
+            name: '# comments',
             data: this.commentName,
             axisPointer: {
               type: 'shadow'
@@ -370,7 +370,7 @@ export default {
             type: 'value',
             name: '# problems discussed by x users',
             min: 0,
-            max: 450,
+            max: 500,
             interval: 50,
             textStyle: {
               color: 'white' // 设置轴标签的文本颜色为白色

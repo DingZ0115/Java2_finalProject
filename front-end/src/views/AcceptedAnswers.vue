@@ -49,6 +49,7 @@
 <script>
 import * as echarts from "echarts";
 import {ref} from "vue";
+import {getBetterRatio} from "@/apis/API";
 
 export default {
   setup() {
@@ -70,6 +71,12 @@ export default {
     }).catch(err => {
       console.log(err);
     });
+    this.$api.API.getBetterRatio().then((resp) => {
+      _this.moreUpvote = resp.data.data.ratio
+    }).catch(err => {
+      console.log(err);
+    });
+
     this.$api.API.getDistrutionOfQuestionDeltaTimes().then((resp) => {
       console.log(resp)
       _this.chartData = resp.data.data.distribution

@@ -335,11 +335,76 @@ public Result getJavaAPI() {
 
 ### 4.6	REST services 
 
+In this project, there are four controllers: QuestionController, AnswerController, TagController, and UserController. Each controller contains a set of different RESTful API endpoints that handle requests related to their respective resources (Question, Answer, Tag, and User). Here are three examples of these endpoints:
+
+```java
+@GetMapping("/getAcceptedQuestionCount")
+@ApiOperation(value = "Question with Accepted Answer Count")
+public Result getAcceptedQuestionCount() {
+    return questionService.getAcceptedQuestionCount();
+}
+
+@GetMapping("/getDistributionOfAnswers")
+@ApiOperation(value = "Distribution Of Answers")
+public Result getDistributionOfAnswers() {
+    return questionService.getDistributionOfAnswers();
+}
+
+@GetMapping("/getBetterRatio")
+@ApiOperation(value = "Distribution Of Answers")
+public Result getBetterRatio() {
+    return questionService.getBetterRatio();
+}
+```
+
+To mark a class as a controller that handles REST requests, the @RestController annotation is used. The @RequestMapping annotation specifies the URL path for each endpoint. Different HTTP method annotations (@GetMapping, @PostMapping, @PutMapping, @DeleteMapping) specify the type of operation for each endpoint.
 
 
 
+## Insights
 
+1. Percentage of questions don't have any answer: **45.2%**
 
+2. Average number of answers: **1.37**
 
+3. Maximum number of answers: **34**
 
+4. Each question has a maximum weight of **0-4** answers.
 
+5. percentage of questions have accepted answers: **18.8%**
+
+6. percentage of questions have accepted answers that have received more upvotes than the accepted answers: **9**
+
+7. Top 5 tags frequently appear together with the java tag:  **spring-boot, android, spring, kotlin, hibernate**
+
+8. Top 5 tags receive the most upvotes: **java, collections, arraylist, initialization, hibernate**
+
+9. Top 5 tag combinations receive the most upvotes: 
+
+   - java, date, timezone
+   - java, nullpointerexception, null
+   - java, casting, operators, variable-assignment, assignment-operator
+   - java, java-8, java-stream
+   - java, java-8, method-reference
+
+10. Top 5 tags receive the most views: **java, collections, arraylist, initialization, hibernate**
+
+11. Top 5 tag combinations receive the most views:
+
+    - java, nullpointerexception, null
+    - java, date, timezone
+    - java, arrays, java-8, java-stream
+    - java, java-8, java-stream
+    - java, list, search, contains
+
+12. The number of users who post **1** question is the largest.
+
+13. The number of users with **0** answer is the highest
+
+14. The number of users with **0** comment is the highest
+
+15. The largest number of questions discussed by **0-1** user.
+
+16. The top 3 active users discussed in java thread: **3145399, 3668752, 67541**
+
+17. The top 5 most frequently discussed APIs on stack overflow:  **java-stream, java-native-interface, java.util.scanner, java-me, java-ee-6**
