@@ -51,4 +51,25 @@ public class TagService {
     }
 
 
+    public Result getTagsUpvoteComb() {
+        List<String> res = tagMapper.getTagsUpvoteComb();
+        List<Integer> num = tagMapper.getTagsUpvoteCombNum();
+        List<String> ret = new ArrayList<>();
+        for (String s : res) {
+            ret.add(s.substring(1, s.length() - 1));
+        }
+        return Result.ok().code(200).message("success").addData("list1", ret).addData("list2",num);
+    }
+
+
+    public Result getTagsViewComb() {
+        List<String> res = tagMapper.getTagsViewComb();
+        List<Integer> num = tagMapper.getTagsViewCombNum();
+        List<String> ret = new ArrayList<>();
+        for (String s : res) {
+            ret.add(s.substring(1, s.length() - 1));
+        }
+        return Result.ok().code(200).message("success").addData("list1", ret).addData("list2",num);
+    }
+
 }

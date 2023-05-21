@@ -24,8 +24,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -136,59 +138,56 @@ public class DBConfig {
         updateTags.close();
     }
 
-    public void updateAnswerFromDB() {
-        try {
-            PreparedStatement getPrepQuestionId = con.prepareStatement("select question_id from question where answer_count > 0;");
-            PreparedStatement insertAnswer = con.prepareStatement("insert into answer (answer_id, is_accepted, score, question_id) values (?, ?, ?,?) on conflict(answer_id) do nothing;");
-            PreparedStatement updateAcceptedTime = con.prepareStatement("update question set accept_time = ? where question_id = ?;");
+    public void updateAnswerFromDB() throws SQLException, URISyntaxException, IOException {
 
-            ResultSet prepQuestionId = getPrepQuestionId.executeQuery();
-            JsonParser parser = new JsonParser();
-            while (prepQuestionId.next()) {
-                int question_id = prepQuestionId.getInt(1);
-                URIBuilder builder = new URIBuilder("https://api.stackexchange.com/2.3/questions/" + question_id + "/answers").addParameter("sort", "activity").addParameter("site", "stackoverflow").addParameter("order", "desc").addParameter("access_token", "tDLfzlXAnWJXUn4pMFnc8w))").addParameter("key", "4te10xQDOUjDKbmiqVOkJg((");
-                //System.out.println(builder.toString());
-                String js = getJSON(builder.build(), "question");
-                if (js != null) {
-                    JsonElement jsonElement = parser.parse(new StringReader(js));
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    JsonElement itemsElement = jsonObject.get("items");
-                    JsonArray itemsArray = itemsElement.getAsJsonArray();
-                    for (JsonElement itemElement : itemsArray) {
-                        JsonObject itemObject = itemElement.getAsJsonObject();
+        PreparedStatement getPrepQuestionId = con.prepareStatement("select question_id from question where answer_count > 0;");
+        PreparedStatement insertAnswer = con.prepareStatement("insert into answer (answer_id, is_accepted, score, question_id) values (?, ?, ?,?) on conflict(answer_id) do nothing;");
+        PreparedStatement updateAcceptedTime = con.prepareStatement("update question set accept_time = ? where question_id = ?;");
 
-                        int answer_id = itemObject.get("answer_id").getAsInt();
-                        int score = itemObject.get("score").getAsInt();
-                        boolean is_accepted = itemObject.get("is_accepted").getAsBoolean();
-                        int date = itemObject.get("creation_date").getAsInt();
+        ResultSet prepQuestionId = getPrepQuestionId.executeQuery();
+        JsonParser parser = new JsonParser();
+        while (prepQuestionId.next()) {
+            int question_id = prepQuestionId.getInt(1);
+            URIBuilder builder = new URIBuilder("https://api.stackexchange.com/2.3/questions/" + question_id + "/answers").addParameter("sort", "activity").addParameter("site", "stackoverflow").addParameter("order", "desc").addParameter("access_token", "tDLfzlXAnWJXUn4pMFnc8w))").addParameter("key", "4te10xQDOUjDKbmiqVOkJg((");
+            //System.out.println(builder.toString());
+            String js = getJSON(builder.build(), "question");
+            if (js != null) {
+                JsonElement jsonElement = parser.parse(new StringReader(js));
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                JsonElement itemsElement = jsonObject.get("items");
+                JsonArray itemsArray = itemsElement.getAsJsonArray();
+                for (JsonElement itemElement : itemsArray) {
+                    JsonObject itemObject = itemElement.getAsJsonObject();
 
-                        //System.out.println(question_id + " " + answer_id + " " + score + " " + is_accepted + " " + date);
+                    int answer_id = itemObject.get("answer_id").getAsInt();
+                    int score = itemObject.get("score").getAsInt();
+                    boolean is_accepted = itemObject.get("is_accepted").getAsBoolean();
+                    int date = itemObject.get("creation_date").getAsInt();
 
-                        insertAnswer.setInt(1, answer_id);
-                        insertAnswer.setBoolean(2, is_accepted);
-                        insertAnswer.setInt(3, score);
-                        insertAnswer.setInt(4, question_id);
-                        insertAnswer.addBatch();
+                    //System.out.println(question_id + " " + answer_id + " " + score + " " + is_accepted + " " + date);
+
+                    insertAnswer.setInt(1, answer_id);
+                    insertAnswer.setBoolean(2, is_accepted);
+                    insertAnswer.setInt(3, score);
+                    insertAnswer.setInt(4, question_id);
+                    insertAnswer.addBatch();
 
 //                        System.out.println("success");
 
-                        if (is_accepted) {
-                            updateAcceptedTime.setInt(1, date);
-                            updateAcceptedTime.setInt(2, question_id);
-                            updateAcceptedTime.addBatch();
-                            updateAcceptedTime.executeUpdate();
-                            updateAcceptedTime.clearBatch();
-                            ;
-                        }
-
+                    if (is_accepted) {
+                        updateAcceptedTime.setInt(1, date);
+                        updateAcceptedTime.setInt(2, question_id);
+                        updateAcceptedTime.addBatch();
+                        updateAcceptedTime.executeUpdate();
+                        updateAcceptedTime.clearBatch();
+                        ;
                     }
-                    insertAnswer.executeBatch();
-                    insertAnswer.clearBatch();
-                }
 
+                }
+                insertAnswer.executeBatch();
+                insertAnswer.clearBatch();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -381,6 +380,65 @@ public class DBConfig {
         insertUser.close();
 
     }
+
+    public void updateTags() {
+        try {
+            PreparedStatement insert = con.prepareStatement("insert into tags_comb(tags_name, upvote, view) values (?,?,?) on conflict(tags_name) do nothing;");
+            JsonParser parser = new JsonParser();
+
+            URIBuilder uriBuilder = new URIBuilder("https://api.stackexchange.com/2.3/questions?&order=desc&sort=activity&tagged=java&site=stackoverflow&filter=!)4qcVpY9Tvb_cdttjBnShttVWo.l");
+            for (int i = 1; i <= 10; i++) {
+                uriBuilder.setParameter("page", String.valueOf(i));
+                uriBuilder.setParameter("pagesize", "50");
+
+                URI uri = uriBuilder.build();
+                System.out.println(uri);
+                String js = getJSON(uri, "tags");
+                if (js != null) {
+                    JsonElement jsonElement = parser.parse(new StringReader(js));
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    JsonElement itemsElement = jsonObject.get("items");
+                    JsonArray itemsArray = itemsElement.getAsJsonArray();
+
+                    for (JsonElement itemElement : itemsArray) {
+                        JsonObject itemObject = itemElement.getAsJsonObject();
+
+                        if (itemObject.has("answers")) {
+                            JsonArray tagsArray = itemObject.get("tags").getAsJsonArray();
+                            List<String> tags = new ArrayList<>();
+                            for (JsonElement tagsElement :
+                                    tagsArray) {
+                                tags.add(tagsElement.getAsString());
+                            }
+
+                            JsonArray answers = itemObject.get("answers").getAsJsonArray();
+                            int upvote = 0;
+                            for (JsonElement answerElement :
+                                    answers) {
+                                upvote += answerElement.getAsJsonObject().get("up_vote_count").getAsInt();
+                            }
+
+                            int view = itemObject.get("view_count").getAsInt();
+
+                            System.out.println(tags.toString()+" " + upvote+" " + view);
+
+                            insert.setString(1, tags.toString());
+                            insert.setInt(2, upvote);
+                            insert.setInt(3, view);
+
+                            insert.addBatch();
+                        }
+
+                        insert.executeBatch();
+                        insert.clearBatch();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private String getUserName(int uid) throws IOException {
         URI uri = URI.create("https://api.stackexchange.com/2.3/users/" + uid + "?order=desc&sort=reputation&site=stackoverflow");

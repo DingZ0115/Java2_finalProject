@@ -36,11 +36,22 @@ public class TagController {
         return tagService.getTop15AppearWithJavaTags();
     }
 
-
     @GetMapping("/getJavaAPI")
     @ApiOperation(value = "Top 30 Java API")
     public Result getJavaAPI(){
         return tagService.getJavaAPI();
+    }
+
+    @GetMapping("/getTagsUpvoteComb")
+    @ApiOperation(value = "Top Combination of tags upvote count")
+    public Result getTagsUpvoteComb(){
+        return tagService.getTagsUpvoteComb();
+    }
+
+    @GetMapping("/getTagsViewComb")
+    @ApiOperation(value = "Top Combination of tags upvote count")
+    public Result getTagsViewComb(){
+        return tagService.getTagsViewComb();
     }
 
 

@@ -1,5 +1,6 @@
 package cse.java2.project.mapper;
 
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -32,5 +33,16 @@ public interface TagMapper {
     @Select("select appear_num from \"APIs\" order by appear_num desc limit 30;")
     List<String> getJavaAPINum();
 
+    @Select("select tags_name from tags_comb order by upvote desc limit 5;")
+    List<String> getTagsUpvoteComb();
+
+    @Select("select tags_name from tags_comb order by view desc limit 5;")
+    List<String> getTagsViewComb();
+
+    @Select("select upvote from tags_comb order by upvote desc limit 5;")
+    List<Integer> getTagsUpvoteCombNum();
+
+    @Select("select view from tags_comb order by view desc limit 5;")
+    List<Integer> getTagsViewCombNum();
 
 }

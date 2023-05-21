@@ -59,7 +59,6 @@ public class QuestionService {
 
             listRange.add(new Range(tName, tValue));
         }
-
         String tName = left + " - " + maxAnswerOfQuestion;
         String tValue = String.valueOf(questionMapper.getRangeDistributionOfAnswer(left, maxAnswerOfQuestion + 1));
         listRange.add(new Range(tName, tValue));

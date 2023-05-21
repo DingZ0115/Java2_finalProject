@@ -1,4 +1,4 @@
-create table question
+create table if not exists question
 (
     item_id         serial
         primary key,
@@ -10,13 +10,16 @@ create table question
     score           integer,
     post_time       varchar,
     accept_time     varchar,
-    comm_num        integer default 0
+    comm_num        integer default 0,
+    tags            varchar,
+    tags_upvote     integer,
+    tags_view       integer
 );
 
 alter table question
     owner to postgres;
 
-create table tag
+create table if not exists tag
 (
     item_id      serial
         constraint tag_pk
@@ -31,7 +34,7 @@ create table tag
 alter table tag
     owner to postgres;
 
-create table users
+create table if not exists users
 (
     item_id     serial
         constraint users_pk
@@ -47,7 +50,7 @@ create table users
 alter table users
     owner to postgres;
 
-create table "APIs"
+create table if not exists "APIs"
 (
     item_id    serial
         constraint "APIs_pk"
@@ -60,7 +63,7 @@ create table "APIs"
 alter table "APIs"
     owner to postgres;
 
-create table answer
+create table if not exists answer
 (
     item_id     serial
         constraint answer_pk
@@ -75,4 +78,17 @@ create table answer
 alter table answer
     owner to postgres;
 
+create table if not exists tags_comb
+(
+    item_id   serial
+        constraint tags_comb_pk
+            primary key,
+    tags_name varchar
+        unique,
+    upvote    integer,
+    view      integer
+);
+
+alter table tags_comb
+    owner to postgres;
 

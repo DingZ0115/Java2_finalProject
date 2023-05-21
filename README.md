@@ -125,9 +125,65 @@ The above four methods are used to update the database using the API interface c
 
 ### 4.1	Number of Answers
 
+Details and implementation of the above method can be found in the **QuestionController, QuestionMapper, and QuestionService.**
 
+#### 4.1.1 Get the ratio of questions without answer
+
+To obtain the percentage of unanswered questions, simply count the number of questions with an answer number of 0 in the database and divide it by the total number of questions.
+
+```java
+public Result getNoAnswerRatio();
+```
+
+#### 4.1.2 Get the average and maximum
+
+To obtain the average and maximum number of answers for a single question, simply perform a statistical analysis on the "answer number" column of the "Question" table in the database.
+
+```java
+public Result getMaxAnswer();
+public Result getAverageAnswer();
+```
+
+#### 4.1.3 Get the distribution of number of answers
+
+To perform a horizontal analysis of the number of answers for each question, divide the questions into eight sub-intervals based on the maximum number of answers, and count the number of questions in each sub-interval. Then, create a bar graph to display the results.
+
+```java
+public Result getDistributionOfAnswers() {
+    int maxAnswerOfQuestion = questionMapper.getMaxAnswerOfQuestion();
+    List<Range> listRange = new ArrayList<>();
+    int r = (int) Math.round((double) maxAnswerOfQuestion / 8);
+    int left = 0;
+    int right = r;
+    for (int i = 0; i < 7; i++) {
+		String tName = left + " - " + right;
+        String tValue = String.valueOf(questionMapper.getRangeDistributionOfAnswer(left, right));
+        left += r;
+        right += r;
+        listRange.add(new Range(tName, tValue));
+    }
+    String tName = left + " - " + maxAnswerOfQuestion;
+    String tValue = String.valueOf(questionMapper.getRangeDistributionOfAnswer(left, maxAnswerOfQuestion + 1));
+    listRange.add(new Range(tName, tValue));
+    return Result.ok().code(200).message("success").addData("distribution", listRange);
+}
+```
 
 ### 4.2	Accepted Answers 
+
+Details and implementation of the above method can be found in the **QuestionController, QuestionMapper, and QuestionService.**
+
+#### 4.2.1 Get the ratio of questions with accepted answer
+
+Similar to 4.1.1, simply count the number of questions in the "Question" table of the database where the "accepted_answer" column is true.
+
+```java
+public Result getAcceptedQuestionCount();
+```
+
+#### 4.2.2 Get the distribution of answer accepted time to question post time
+
+To calculate the distribution of the time difference between accepting an answer and posting a question, only questions that have accepted answers need to be considered. For each question with an accepted answer, retrieve the submission time of the question and the posting time of the accepted answer, calculate their difference, and perform a statistical analysis similar to 4.1.3.
 
 
 
@@ -141,22 +197,6 @@ The above four methods are used to update the database using the API interface c
 
 ### 4.5	Frequently discussed  Java APIs 
 
-
-
-### 4.6	REST services 
-
-
-
-
-
-
-
-### 3.1	Update data from Website
-
-### 3.2	Front-end communication
-
-### 3.3	Get Java API popularity
-
 How to obtain the popularity of the Java API seems to be a relatively difficult problem, but you can find the naming rules of the Java API by consulting the Java API documentation, that is, starting with java, javax, org and so on. Therefore, you only need to process the name of the tag when querying the tag, fuzzy query, and use regular expressions to exclude tags such as java-11 to correctly obtain the number of questions to fill in the Java API. This method is to count the problems that the Java API tag is correctly filled in, and does not consider the problems that are not filled in correctly.
 
 The following are some of the Java API popularity data crawled:
@@ -169,4 +209,16 @@ The following are some of the Java API popularity data crawled:
 | 44      | java-me               | 5780       |
 | 45      | java-ee-6             | 2033       |
 | 46      | java-io               | 1750       |
+
+### 4.6	REST services 
+
+
+
+
+
+
+
+### 3.1	Update data from Website
+
+### 3.2	Front-end communication
 
