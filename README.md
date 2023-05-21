@@ -124,7 +124,7 @@ public void updateTags() throws SQLException, IOException;
 
 The above four methods are used to update the database using the API interface crawler. The basic idea is: construct the access URI, apply for the return value in JSON format, process the returned data, and write to the database.  More details at `config\DBconfig` .
 
-![crawler](images\crawler.png)
+<img src="images\crawler.png" alt="crawler" style="zoom:80%;" />
 
 
 
