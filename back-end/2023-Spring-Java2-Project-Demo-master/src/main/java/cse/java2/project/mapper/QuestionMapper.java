@@ -1,14 +1,12 @@
 package cse.java2.project.mapper;
 
-import cse.java2.project.entity.Question;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
-
+/**
+ * Mapper for question.
+ */
 @Mapper
 public interface QuestionMapper {
 
@@ -27,7 +25,9 @@ public interface QuestionMapper {
     @Select("select count(*) from question where accepted_answer is true;")
     int getAcceptedQuestionCount();
 
-    @Select("select count(*) from question where answer_count >= #{leftRange} and answer_count < #{rightRange}")
+    @Select("select count(*) from question where answer_count >= #{leftRange} "
+            +
+            "and answer_count < #{rightRange}")
     int getRangeDistributionOfAnswer(int leftRange, int rightRange);
 
 

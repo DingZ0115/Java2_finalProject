@@ -1,14 +1,11 @@
 package cse.java2.project.common;
 
-
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import lombok.Data;
 
 /**
- * TODO: None
+ * TODO: None.
  *
  * @Description 要求所有返回的数据格式都应该为Result对象，建议使用链式编程进行赋值,第一项必须生命ok/error
  */

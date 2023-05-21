@@ -4,35 +4,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.swagger.models.auth.In;
 import org.apache.http.client.utils.URIBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * update data form stackoverflow.
+ */
 @Configuration
 public class DBConfig {
     private static final String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -57,11 +44,17 @@ public class DBConfig {
     }
 
     public void updateQuestionAndTagFromWeb() throws URISyntaxException, IOException, SQLException {
-        int pagesize = 100, page = 5;
+        int pagesize = 100;
+        int page = 5;
         JsonParser parser = new JsonParser();
         URIBuilder builder = new URIBuilder("https://api.stackexchange.com/2.3/questions").addParameter("tagged", "java").addParameter("sort", "activity").addParameter("site", "stackoverflow").addParameter("pagesize", String.valueOf(pagesize)).addParameter("order", "desc").addParameter("access_token", "QVf1Fr4u9Gbm1WOEjvNu*Q))").addParameter("key", "4te10xQDOUjDKbmiqVOkJg((");
 
-        PreparedStatement statement = con.prepareStatement("insert into question ( question_id, answer_count, accepted_answer, view_count, score, post_time) values (?, ?, ?, ?, ?, ?) on conflict (question_id) do nothing;");
+        PreparedStatement statement = con.prepareStatement(
+                "insert into question ( question_id, answer_count, accepted_answer, "
+                        +
+                        "view_count, score, post_time) values (?, ?, ?, ?, ?, ?) on conflict "
+                        +
+                        "(question_id) do nothing;");
 
         Map<String, Integer> tagsView = new HashMap<>();
         Map<String, Integer> tagsUpvote = new HashMap<>();
@@ -117,7 +110,12 @@ public class DBConfig {
         System.out.println(tagsUpvote);
         System.out.println(tagsView);
 
-        PreparedStatement updateTags = con.prepareStatement("insert into tag (tag_name, view_count, upvote_count,appear_num) values (?, ?, ?, ?) on conflict(tag_name) do update set (view_count, upvote_count, appear_num) = (?, ?, ?);");
+        PreparedStatement updateTags = con.prepareStatement(
+                "insert into tag (tag_name, view_count, upvote_count,appear_num) "
+                        +
+                        "values (?, ?, ?, ?) on conflict(tag_name) do update "
+                        +
+                        "set (view_count, upvote_count, appear_num) = (?, ?, ?);");
         tagsView.forEach((name, view) -> {
             int upvote = tagsUpvote.get(name);
             int appear = tagsAppear.get(name);
@@ -140,9 +138,14 @@ public class DBConfig {
 
     public void updateAnswerFromDB() throws SQLException, URISyntaxException, IOException {
 
-        PreparedStatement getPrepQuestionId = con.prepareStatement("select question_id from question where answer_count > 0;");
-        PreparedStatement insertAnswer = con.prepareStatement("insert into answer (answer_id, is_accepted, score, question_id) values (?, ?, ?,?) on conflict(answer_id) do nothing;");
-        PreparedStatement updateAcceptedTime = con.prepareStatement("update question set accept_time = ? where question_id = ?;");
+        PreparedStatement getPrepQuestionId = con.prepareStatement(
+                "select question_id from question where answer_count > 0;");
+        PreparedStatement insertAnswer = con.prepareStatement(
+                "insert into answer (answer_id, is_accepted, score, question_id) "
+                        +
+                        "values (?, ?, ?,?) on conflict(answer_id) do nothing;");
+        PreparedStatement updateAcceptedTime = con.prepareStatement(
+                "update question set accept_time = ? where question_id = ?;");
 
         ResultSet prepQuestionId = getPrepQuestionId.executeQuery();
         JsonParser parser = new JsonParser();
@@ -172,8 +175,6 @@ public class DBConfig {
                     insertAnswer.setInt(4, question_id);
                     insertAnswer.addBatch();
 
-//                        System.out.println("success");
-
                     if (is_accepted) {
                         updateAcceptedTime.setInt(1, date);
                         updateAcceptedTime.setInt(2, question_id);
@@ -197,13 +198,18 @@ public class DBConfig {
         URI xUri = URI.create("https://api.stackexchange.com/2.3/tags?pagesize=30&order=desc&sort=popular&inname=javax.&site=stackoverflow");
         URI scoreUri = URI.create("https://api.stackexchange.com/2.3/tags?pagesize=30&order=desc&sort=popular&inname=java-&site=stackoverflow");
 
-        PreparedStatement statement = con.prepareStatement("insert into \"APIs\" (api_name,appear_num) values (?,? ) on conflict (api_name) do nothing;");
+        PreparedStatement statement = con.prepareStatement(
+                "insert into \"APIs\" (api_name,appear_num) values (?,? ) "
+                        +
+                        "on conflict (api_name) do nothing;");
         String jsPoint = getJSON(pointUri, "API");
         String jsX = getJSON(xUri, "API");
         String jsScore = getJSON(scoreUri, "API");
         JsonParser parser = new JsonParser();
-        JsonArray pointReturn = parser.parse(new StringReader(jsPoint)).getAsJsonObject().get("items").getAsJsonArray();
-        JsonArray xReturn = parser.parse(new StringReader(jsX)).getAsJsonObject().get("items").getAsJsonArray();
+        JsonArray pointReturn = parser.parse(new StringReader(jsPoint)).getAsJsonObject()
+                .get("items").getAsJsonArray();
+        JsonArray xReturn = parser.parse(new StringReader(jsX)).getAsJsonObject()
+                .get("items").getAsJsonArray();
         JsonArray scoreReturn = parser.parse(new StringReader(jsScore)).getAsJsonObject().get("items").getAsJsonArray();
 
         for (JsonElement jsElement : pointReturn) {
@@ -310,9 +316,11 @@ public class DBConfig {
                                     for (JsonElement itemElement : itemsArray) {
                                         JsonObject itemObject = itemElement.getAsJsonObject();
                                         if (itemObject.get("owner").getAsJsonObject().get("account_id") != null &&
-                                                itemObject.get("owner").getAsJsonObject().get("account_id").getAsString() != null &&
+                                                itemObject.get("owner").getAsJsonObject().get("account_id").getAsString() != null
+                                                &&
                                                 itemObject.get("owner").getAsJsonObject().get("account_id").getAsInt() != -1) {
-                                            int user_comment_id = itemObject.get("owner").getAsJsonObject().get("account_id").getAsInt();
+                                            int user_comment_id = itemObject.get("owner").getAsJsonObject()
+                                                    .get("account_id").getAsInt();
                                             //System.out.println("comment " + user_comment_id);
 
                                             commSet.add(user_comment_id);
@@ -332,7 +340,8 @@ public class DBConfig {
 
         FileWriter fw = new FileWriter("test.txt");
 
-        PreparedStatement updateQuestion = con.prepareStatement("update question set comm_num = ? where question_id = ?;");
+        PreparedStatement updateQuestion = con.prepareStatement(
+                "update question set comm_num = ? where question_id = ?;");
 
         questionComm.forEach((k, v) -> {
             try {
@@ -420,7 +429,7 @@ public class DBConfig {
 
                             int view = itemObject.get("view_count").getAsInt();
 
-                            System.out.println(tags.toString()+" " + upvote+" " + view);
+                            System.out.println(tags.toString() + " " + upvote + " " + view);
 
                             insert.setString(1, tags.toString());
                             insert.setInt(2, upvote);
@@ -447,7 +456,8 @@ public class DBConfig {
         JsonParser parser = new JsonParser();
         String name = "";
         if (js != null) {
-            JsonArray questionReturn = parser.parse(new StringReader(js)).getAsJsonObject().get("items").getAsJsonArray();
+            JsonArray questionReturn = parser.parse(new StringReader(js)).getAsJsonObject()
+                    .get("items").getAsJsonArray();
             for (JsonElement questionElement : questionReturn) {
                 JsonObject questionObject = questionElement.getAsJsonObject();
                 name = questionObject.get("display_name").getAsString();
@@ -462,7 +472,8 @@ public class DBConfig {
         conn.connect();
         int responseCode = conn.getResponseCode();
         if (responseCode == 200) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(conn.getInputStream()), StandardCharsets.UTF_8));
+            BufferedReader reader = new BufferedReader(new InputStreamReader
+                    (new GZIPInputStream(conn.getInputStream()), StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {

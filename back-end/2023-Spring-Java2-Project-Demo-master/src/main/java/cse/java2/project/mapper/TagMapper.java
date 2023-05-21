@@ -1,11 +1,12 @@
 package cse.java2.project.mapper;
 
-import io.swagger.models.auth.In;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
+/**
+ * Mapper for Tag.
+ */
 @Mapper
 public interface TagMapper {
 

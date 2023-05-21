@@ -2,6 +2,9 @@ package cse.java2.project.entity;
 
 import lombok.Data;
 
+/**
+ * Entity for user.
+ */
 @Data
 public class Users {
     String name;

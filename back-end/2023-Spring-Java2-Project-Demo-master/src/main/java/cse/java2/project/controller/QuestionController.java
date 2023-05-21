@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for question.
+ */
 @RestController
 @RequestMapping("/question")
 @CrossOrigin(origins = "*")
@@ -56,9 +59,9 @@ public class QuestionController {
 
     @GetMapping("/getDistrutionOfQuestionDeltaTimes")
     @ApiOperation(value = "Distribution Of Question post and accept time")
-    public Result getDistrutionOfQuestionDeltaTimes(){return questionService.getDistributionOfQuestionDeltaTimes();}
-
-
+    public Result getDistrutionOfQuestionDeltaTimes() {
+        return questionService.getDistributionOfQuestionDeltaTimes();
+    }
 
 
 }

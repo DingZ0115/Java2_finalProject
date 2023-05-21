@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for user.
+ */
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
@@ -20,47 +23,51 @@ public class UserController {
 
     @GetMapping("/getUserDistributionOfPost")
     @ApiOperation(value = "User Distribution Of Posting Question")
-    public Result getUserDistributionOfPost(){
+    public Result getUserDistributionOfPost() {
         return userService.getUserDistributionOfPost();
     }
 
     @GetMapping("/getMostPostingUser")
     @ApiOperation(value = "User Who Post Most")
-    public Result getMostPostingUser(){
+    public Result getMostPostingUser() {
         return userService.getMostPostingUser();
     }
 
     @GetMapping("/getUserDistributionOfAnswer")
     @ApiOperation(value = "User Distribution Of Answer")
-    public Result getUserDistributionOfAnswer(){
+    public Result getUserDistributionOfAnswer() {
         return userService.getUserDistributionOfAnswer();
     }
 
     @GetMapping("/getMostAnswerUser")
     @ApiOperation(value = "User Who Answer Most")
-    public Result getMostAnswerUser(){
+    public Result getMostAnswerUser() {
         return userService.getMostAnswerUser();
     }
 
     @GetMapping("/getUserDistributionOfComment")
     @ApiOperation(value = "User Distribution Of Comment")
-    public Result getUserDistributionOfComment(){
+    public Result getUserDistributionOfComment() {
         return userService.getUserDistributionOfComment();
     }
 
     @GetMapping("/getMostCommentUser")
     @ApiOperation(value = "User Who Comment Most")
-    public Result getMostCommentUser(){
+    public Result getMostCommentUser() {
         return userService.getMostCommentUser();
     }
 
     @GetMapping("/getMostActiveUser")
     @ApiOperation(value = "User Who Most Active")
-    public Result getMostActiveUser(){return userService.getMostActiveUser();}
+    public Result getMostActiveUser() {
+        return userService.getMostActiveUser();
+    }
 
     @GetMapping("/getUserDistributionOfCommunication")
     @ApiOperation(value = "User Distribution Of Communication")
-    public Result getUserDistributionOfCommunication(){return userService.getUserDistributionOfCommunication();}
+    public Result getUserDistributionOfCommunication() {
+        return userService.getUserDistributionOfCommunication();
+    }
 
 
 }

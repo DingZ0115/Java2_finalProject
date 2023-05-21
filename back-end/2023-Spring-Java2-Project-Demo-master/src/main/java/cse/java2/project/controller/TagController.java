@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for tag.
+ */
 @RestController
 @RequestMapping("/tag")
 @CrossOrigin(origins = "*")
@@ -30,27 +33,28 @@ public class TagController {
     public Result getTop5UpvoteTags() {
         return tagService.getTop5UpvoteTags();
     }
+
     @GetMapping("/getTop15AppearWithJavaTags")
     @ApiOperation(value = "Top 15 Appear Together with Java Tags")
-    public Result getTop15AppearWithJavaTags(){
+    public Result getTop15AppearWithJavaTags() {
         return tagService.getTop15AppearWithJavaTags();
     }
 
     @GetMapping("/getJavaAPI")
     @ApiOperation(value = "Top 30 Java API")
-    public Result getJavaAPI(){
+    public Result getJavaAPI() {
         return tagService.getJavaAPI();
     }
 
     @GetMapping("/getTagsUpvoteComb")
     @ApiOperation(value = "Top Combination of tags upvote count")
-    public Result getTagsUpvoteComb(){
+    public Result getTagsUpvoteComb() {
         return tagService.getTagsUpvoteComb();
     }
 
     @GetMapping("/getTagsViewComb")
     @ApiOperation(value = "Top Combination of tags upvote count")
-    public Result getTagsViewComb(){
+    public Result getTagsViewComb() {
         return tagService.getTagsViewComb();
     }
 
