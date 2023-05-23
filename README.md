@@ -7,6 +7,12 @@
 | 12011736 | Zhe DING   | 50%                | DingZ0115 |
 | 12011126 | Zexuan Jia | 50%                | Kazawaryu |
 
+**Thanks to the following people who participated in the project:**
+
+<a href="https://github.com/DingZ0115/Java2_finalProject/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=DingZ0115/Java2_finalProject" />
+</a>
+
 
 
 ## 2.	Architecture Design
